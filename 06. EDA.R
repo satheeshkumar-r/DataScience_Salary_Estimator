@@ -15,27 +15,26 @@ colnames(df)
 
 
 ### Histogram View
-hist(df$Rating)
+hist(df$Company_Rating)
 hist(df$avg_salary)
-hist(df$age)
-hist(df$desc_len)
+hist(df$pd_hourly)
 
 ### Boxplot  View
-boxplot(df$age, df$avg_salary, df$Rating)
-boxplot(df$Rating)
+boxplot(df$pd_hourly, df$avg_salary, df$Company_Rating)
+boxplot(df$Company_Rating)
 
 ### Correlation View
-cor(df[,c('age','avg_salary','Rating','desc_len')])
+cor(df[,c('avg_salary','pd_hourly')])
 
 ### Heatmap View
 col = colorRampPalette(c('pink', 'white', 'red'))(256)
-heatmap(cor(df[,c('age','avg_salary','Rating','desc_len','num_comp')]), col = col)
+heatmap(cor(df[,c('pd_hourly','avg_salary')]), col = col)
 
 ### Barplot View
-barplot(sort(table(df$Location), decreasing = TRUE), col = rainbow(length(df$Location)), las = 2, cex.names=0.5 )
+barplot(sort(table(df$City_State), decreasing = TRUE), col = rainbow(length(df$City_State)), las = 2, cex.names=0.5 )
+barplot(sort(table(df$job_state), decreasing = TRUE), col = rainbow(length(df$job_state)), las = 2, cex.names=0.5 )
 
-df_cat = df[ , c('Location', 'Headquarters', 'Size','Type.of.ownership', 'Industry', 'Sector', 'Revenue', 'company_txt', 'job_state','same_state', 'python_yn', 'R_yn',
-             'spark', 'aws', 'excel', 'job_simp', 'seniority')]
+df_cat = df[ , c('Company_Name', 'City_State', 'job_state','job_simp', 'seniority')]
 
 colindex = 0
 for (col_name in df_cat) 
@@ -56,7 +55,7 @@ for (col_name in df_cat)
       )
 }
 
-df_catlong = df[ , c('Location', 'Headquarters', 'company_txt')]
+df_catlong = df[ , c('Company_Name', 'City_State')]
 
 colindex = 0
 for (col_name in df_catlong) 
@@ -115,8 +114,8 @@ pt$renderPivot()
 
 pt <- PivotTable$new()
 pt$addData(df)
-pt$addRowDataGroups('Revenue')
-pt$addColumnDataGroups('python_yn')
+pt$addRowDataGroups('Company_Rating')
+pt$addColumnDataGroups('job_simp')
 pt$defineCalculation(calculationName='Average salary', summariseExpression='n()')
 pt$renderPivot()
 
