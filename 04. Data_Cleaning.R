@@ -8,7 +8,7 @@ library(stringr)
 getwd()
 setwd('E:/Data Science/01. Projects/03. DataScience_Salary_Estimator')
 
-df = read.csv('Glassdoor_JobData.csv')
+df = read.csv('02. Glassdoor_JobData.csv')
 
 #head(df)
 
@@ -36,6 +36,12 @@ df$avg_salary = apply(df[,8:9], 1, mean)
 ### Location Parsing
 df$job_state = str_trim(str_split_fixed(df$City_State, ',', 2)[,2])
 table(df$job_state)
+
+### Post_Date Parsing
+PD_Hr = (str_split_fixed(df$Post_Date, 'h', 2)[,1])
+PD_Hr = lapply(PD_Hr, function(x) {ifelse( str_contains(x,'d',ignore.case = TRUE) == TRUE, as.numeric((str_split_fixed(x, 'd', 2)[,1]))*24, as.numeric(x) )  }) 
+
+df$PD_Hourly = PD_Hr
 
 ### Title Parsing    
 Title_Simplifier = function(x)
@@ -83,7 +89,8 @@ sapply(df, class)
 df$hourly = unlist(df$hourly)
 df$job_simp = unlist(df$job_simp)
 df$seniority = unlist(df$seniority)
+df$PD_Hourly = unlist(df$PD_Hourly)
 
-write.csv(df,"E:\\Data Science\\01. Projects\\03. DataScience_Salary_Estimator\\Data_Cleaned.csv", row.names = FALSE)
+write.csv(df,"E:\\Data Science\\01. Projects\\03. DataScience_Salary_Estimator\\05. Data_Cleaned.csv", row.names = FALSE)
 
-remove(df, salary, Job_Seniority, Title_Simplifier)
+remove(df, PD_Hr, salary, Job_Seniority, Title_Simplifier)
