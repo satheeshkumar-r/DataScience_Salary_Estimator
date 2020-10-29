@@ -13,9 +13,8 @@ df = read.csv('02. Glassdoor_JobData.csv')
 #head(df)
 
 ### Salary Parsing
-
-df$hourly = lapply(df$salary_Range, function(x){ifelse(str_contains(x,'per hour',ignore.case = TRUE) == TRUE, 1, 0 )}) 
-# nrow(df[df$hourly == 1, ])             
+df$sal_hourly = lapply(df$salary_Range, function(x){ifelse(str_contains(x,'per hour',ignore.case = TRUE) == TRUE, 1, 0 )}) 
+# nrow(df[df$sal_hourly == 1, ])             
 
 df = df[is.na(df$salary_Range) != TRUE, ]
 # nrow(df)
@@ -41,7 +40,7 @@ table(df$job_state)
 PD_Hr = (str_split_fixed(df$Post_Date, 'h', 2)[,1])
 PD_Hr = lapply(PD_Hr, function(x) {ifelse( str_contains(x,'d',ignore.case = TRUE) == TRUE, as.numeric((str_split_fixed(x, 'd', 2)[,1]))*24, as.numeric(x) )  }) 
 
-df$PD_Hourly = PD_Hr
+df$pd_hourly = PD_Hr
 
 ### Title Parsing    
 Title_Simplifier = function(x)
@@ -76,20 +75,20 @@ df$seniority = lapply(df$Job_Title, Job_Seniority)
 table(as.character(df$seniority))
 
 ### Hourly Wage Parsing
-df$min_salary = apply(df, 1,function(x){ ifelse(x$hourly == 1, x$min_salary*2, x$min_salary) })
-df$max_salary = apply(df, 1,function(x){ ifelse(x$hourly == 1, x$max_salary*2, x$max_salary) })
+df$min_salary = apply(df, 1,function(x){ ifelse(x$sal_hourly == 1, x$min_salary*2, x$min_salary) })
+df$max_salary = apply(df, 1,function(x){ ifelse(x$sal_hourly == 1, x$max_salary*2, x$max_salary) })
 
-df[ df$hourly ==1 , c('hourly','min_salary', 'max_salary')]  
+df[ df$sal_hourly ==1 , c('sal_hourly','min_salary', 'max_salary')]  
 
 ### To resolve write.csv error "unimplemented type 'list' in 'EncodeElement'"
 ### To avoid this, you should first check the data type for each column:
 sapply(df, class)
 
 ### Use unlist() to fix the offending columns.
-df$hourly = unlist(df$hourly)
+df$sal_hourly = unlist(df$sal_hourly)
 df$job_simp = unlist(df$job_simp)
 df$seniority = unlist(df$seniority)
-df$PD_Hourly = unlist(df$PD_Hourly)
+df$pd_hourly = unlist(df$pd_hourly)
 
 write.csv(df,"E:\\Data Science\\01. Projects\\03. DataScience_Salary_Estimator\\05. Data_Cleaned.csv", row.names = FALSE)
 
