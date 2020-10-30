@@ -14,7 +14,7 @@ df = read.csv('05. Data_Cleaned.csv')
 
 ### Choose relevant columns 
 colnames(df)
-df_model = df[,c('job_state', 'job_simp',  'seniority', 'avg_salary')]
+df_model = df[ df$job_simp == 'data scientist' ,c('job_state', 'job_simp',  'seniority', 'avg_salary')]
 
 ### Adding dummy variables
 colnames(df_model)
