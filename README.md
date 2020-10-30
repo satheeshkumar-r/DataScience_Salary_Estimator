@@ -31,4 +31,5 @@ Considered three different models and evaluated them using root-mean-square erro
 *	**Multi-Linear Regression** : MAE = 23.93827
 *	**Decision Tree Regression**: MAE = 24.14426
 *	**Random Forest Regression**: MAE = 9.984035
+
 The Random Forest model far outperformed the other approaches on the test and validation sets. 
