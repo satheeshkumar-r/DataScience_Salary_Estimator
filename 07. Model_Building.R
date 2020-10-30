@@ -29,7 +29,7 @@ split = sample.split(Y = df_dum$avg_salary, SplitRatio = 0.8 )
 Training_Data = subset(df_dum, split == TRUE)
 Test_Data = subset(df_dum, split == FALSE)
 
-### Multiple linear regression
+### Multi-Linear Regression
 M_regressor = lm(formula = avg_salary ~ . ,
                     data = Training_Data )
 
@@ -39,7 +39,7 @@ Y_Mpred =  predict(M_regressor, newdata = Training_Data)
 
 rmse(Training_Data$avg_salary, Y_Mpred)
 
-### Decision Tree regression 
+### Decision Tree Regression 
 DT_Regressor = rpart (formula = avg_salary ~.,
                       data = Training_Data,
                       control = rpart.control(minsplit = 2))
@@ -48,7 +48,7 @@ Y_DTpred = predict(DT_Regressor, newdata = Training_Data )
 
 rmse(Training_Data$avg_salary, Y_DTpred)
 
-### random forest 
+### Random Forest Regression 
 RF_Regressor = randomForest( x = Training_Data[-c(3)],
                              y = Training_Data$avg_salary,
                              ntree = 5)
@@ -57,7 +57,7 @@ Y_RFpred = predict(RF_Regressor, newdata = Training_Data )
 
 rmse(Training_Data$avg_salary, Y_RFpred)
 
-# test ensembles 
+# Test Ensembles 
 Y_Test_Mpred =  predict(M_regressor, newdata = Test_Data)
 Y_Test_DTpred = predict(DT_Regressor, newdata = Test_Data )  
 Y_Test_RFpred = predict(RF_Regressor, newdata = Test_Data )  
