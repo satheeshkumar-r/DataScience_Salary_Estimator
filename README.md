@@ -17,3 +17,12 @@ It helps to remove inaccurate and unwanted data.
 *	Parsed Post_Date
 *	Parsed Job_Title
 
+## Exploratory Data Analysis
+EDA depicts
+*	Histogram View
+*	Boxplot View
+*	Correlation View
+*	Heatmap View
+*	Barplot View
+*	Pivot table view
+
