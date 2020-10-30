@@ -8,12 +8,7 @@ The goal of this project is to build a model that predicts the average salary of
 
 ## Glassdoor Scraping
 Pulled out the current job postings from glassdoor.com available in 8 states throughout the United States. With each job, we get the following:
-*	Job_Title
-*	Company_Name
-*	City_State
-*	Company_Rating
-*	salary_Range
-*	Post_Date
+*	Job_Title  *	Company_Name  *	City_State  *	Company_Rating  *	salary_Range  *	Post_Date
 
 ## Data Cleaning
 It helps to remove inaccurate and unwanted data. 
